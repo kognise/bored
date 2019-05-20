@@ -13,7 +13,11 @@ const Page = (props) => {
     </Head>
 
     <h2>{props.post.title}</h2>
-    <p>{props.post.body}</p>
+    <p>
+      {props.post.body.split('\n').map((item, index) => (
+        <span key={index}>{item}<br/></span>
+      ))}
+    </p>
     <div>{format(props.post)}</div>
 
     <style jsx>{`
