@@ -22,8 +22,8 @@ export default (props) => (
       h2 a:hover {
         text-decoration: underline;
       }
-      h2 {
-        margin-top: 30px;
+      div {
+        margin-bottom: 30px;
       }
     `}</style>
   </article>
