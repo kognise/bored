@@ -38,6 +38,7 @@ export default (props) => <>
       list-style-type: none;
       margin: 0;
       padding: 0;
+      margin-bottom: 30px;
     }
     .navigation li {
       display: inline-block;

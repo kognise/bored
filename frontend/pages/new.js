@@ -1,20 +1,32 @@
 import Layout from '../components/Layout'
 import backend from '../lib/backend'
 import useForm from 'react-hook-form'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { withRouter } from 'next/router'
 import { parseCookies } from 'nookies'
+import { useState } from 'react'
 import Head from 'next/head'
 
 const Page = (props) => {
   const { handleSubmit, register, errors } = useForm()
+  const [ captcha, setCaptcha ] = useState(null)
+  const [ captchaError, setCaptchaError ] = useState(null)
+
   const onSubmit = async (values) => {
+    if (!captcha) {
+      setCaptchaError('Please fill out the captcha!')
+      return
+    } else {
+      setCaptchaError(null)
+    }
+
     document.cookie = `username=${encodeURIComponent(values.author)}`
     const res = await fetch(`${backend}/submit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(values)
+      body: JSON.stringify({ ...values, captcha })
     })
     const json = await res.json()
     props.router.push(`/post?id=${json.id}`)
@@ -59,12 +71,23 @@ const Page = (props) => {
         ref={register({})}
       />
 
+      {captchaError && <p className='error'>{captchaError}</p>}
+      <ReCAPTCHA
+        sitekey='6LeYiqQUAAAAAGs2yfPFNjbMHCzvKbfKRX_upvOK'
+        theme='dark'
+        className='captcha'
+        onChange={setCaptcha}
+      />
+
       <button type='submit'>Post</button>
     </form>
 
     <style jsx global>{`
       ::placeholder {
         color: #B7B7B7;
+      }
+      .captcha {
+        margin-bottom: 14px;
       }
     `}</style>
     <style jsx>{`
