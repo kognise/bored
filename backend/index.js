@@ -18,7 +18,7 @@ app.get('/backend/post/:id', (req, res) => {
 })
 app.post('/backend/submit', async (req, res) => {
   const id = await uid(10)
-  posts.push({
+  posts.unshift({
     ...req.body,
     id, when: Date.now()
   })
