@@ -4,14 +4,14 @@ export default (props) => <>
   <h1>Bored</h1>
 
   <ul className='navigation'>
+    {props.newPost && <li className='primary'>
+      <Link href='/new'>
+        <a>New post</a>
+      </Link>
+    </li>}
     {props.goHome && <li>
       <Link href='/'>
         <a>Go home</a>
-      </Link>
-    </li>}
-    {props.newPost && <li>
-      <Link href='/new'>
-        <a>New post</a>
       </Link>
     </li>}
   </ul>
@@ -45,11 +45,15 @@ export default (props) => <>
     }
     .navigation li a {
       color: #DEE2E6;
+      padding: 8px;
       text-decoration: none;
     }
     .navigation li a:hover {
       color: #FFFFFF;
       text-decoration: underline;
+    }
+    .navigation li.primary a {
+      background: #1c7ed6;
     }
   `}</style>
 </>
